@@ -35,11 +35,11 @@ function draw() {
     fill("#FF0000");
     stroke("#FF0000");
 
-    
+    status = song1.isPlaying();
     if(leftWristScore>0.2)
     {
         circle(leftWristX, leftWristY, 20);
-        status = song1.isPlaying();
+       
         song2.stop();
         if(status == false )
         {
@@ -48,11 +48,11 @@ function draw() {
             
         }
     }
-      
+    status = song2.isPlaying();
     if(rightWristScore>0.2)
     {
         circle(rightWristX, rightWristY, 20);
-        status = song2.isPlaying();
+        
         song1.stop();
         if(status == false )
         {
