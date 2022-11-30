@@ -6,74 +6,66 @@ rightWristX = 0;
 rightWristY = 0;
 leftWristScore = 0;
 rightWristScore = 0;
-status = ""; 
+status_song1 = "";
+status_song2 = "";
 
-function preload()
-{
-    song1=loadSound("music.mp3");
-    song2=loadSound("music2.mp3");
+
+function preload() {
+    song1 = loadSound("music.mp3");
+    song2 = loadSound("music2.mp3");
 }
-function setup()
-{
-    canvas= createCanvas(600,500);
+function setup() {
+    canvas = createCanvas(600, 500);
     canvas.center();
 
-    video=createCapture(VIDEO);
+    video = createCapture(VIDEO);
     video.hide();
 
     poseNet = ml5.poseNet(video, modelLoaded);
     poseNet.on('pose', gotPoses)
 }
-function modelLoaded()
-{
+function modelLoaded() {
     console.log('PoseNet Is Initialized');
 }
 function draw() {
-    
-    image(video, 0, 0,600, 500);
+
+    image(video, 0, 0, 600, 500);
 
     fill("#FF0000");
     stroke("#FF0000");
 
-    status = song1.isPlaying();
-    if(leftWristScore>0.2)
-    {
+    status_song1 = song1.isPlaying();
+    if (leftWristScore > 0.2) {
         circle(leftWristX, leftWristY, 20);
-       
+
         song2.stop();
-        if(status == false )
-        {
+        if (status_song1 == false) {
             song1.play();
-            document.getElementById("song").innerHTML = "Song Name :"+ " Harry Potter Theme";
-            
+            document.getElementById("song").innerHTML = "Song Name :" + " Harry Potter Theme";
+
         }
     }
-    status = song2.isPlaying();
-    if(rightWristScore>0.2)
-    {
+    status_song2 = song2.isPlaying();
+    if (rightWristScore > 0.2) {
         circle(rightWristX, rightWristY, 20);
-        
+
         song1.stop();
-        if(status == false )
-        {
+        if (status_song2 == false) {
             song2.play();
-            document.getElementById("song").innerHTML = "Song Name :"+ " Peter Pan Theme";
-            
+            document.getElementById("song").innerHTML = "Song Name :" + " Peter Pan Theme";
+
         }
     }
-    
+
 }
-function play()
-{
+function play() {
     song1.play();
     song1.setVolume(1);
     song1.rate(1);
-    document.getElementById("song").innerHTML = "Song Name :"+ " Harry Potter Theme";
+    document.getElementById("song").innerHTML = "Song Name :" + " Harry Potter Theme";
 }
-function gotPoses(results)
-{
-    if(results.length > 0)
-    {
+function gotPoses(results) {
+    if (results.length > 0) {
         console.log(results);
         leftWristScore = results[0].pose.keypoints[9].score;
         console.log("leftWristScore = " + leftWristScore)
@@ -85,6 +77,8 @@ function gotPoses(results)
 
         rightWristX = results[0].pose.rightWrist.x;
         rightWristY = results[0].pose.rightWrist.y;
+        rightWristScore = results[0].pose.keypoints[10].score;
+        console.log("rightWristScore = " + rightWristScore)
 
         console.log("rightWristX =" + rightWristX + " ,rightWristY =" + rightWristY);
 
