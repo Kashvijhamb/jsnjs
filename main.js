@@ -5,12 +5,13 @@ leftWristY = 0;
 rightWristX = 0;
 rightWristY = 0;
 leftWristScore = 0;
+rightWristScore = 0;
 status = ""; 
 
 function preload()
 {
     song1=loadSound("music.mp3");
-    song2=loadSound("music2.mp3")
+    song2=loadSound("music2.mp3");
 }
 function setup()
 {
@@ -34,10 +35,11 @@ function draw() {
     fill("#FF0000");
     stroke("#FF0000");
 
-    status = song1.isPlaying();
+    
     if(leftWristScore>0.2)
     {
         circle(leftWristX, leftWristY, 20);
+        status = song1.isPlaying();
         song2.stop();
         if(status == false )
         {
@@ -46,7 +48,19 @@ function draw() {
             
         }
     }
-
+      
+    if(rightWristScore>0.2)
+    {
+        circle(rightWristX, rightWristY, 20);
+        status = song2.isPlaying();
+        song1.stop();
+        if(status == false )
+        {
+            song2.play();
+            document.getElementById("song").innerHTML = "Song Name :"+ " Peter Pan Theme";
+            
+        }
+    }
     
 }
 function play()
